@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        section.info {
+            display: flex;
+            justify-content: space-evenly;
+            width: 100%;
+        }
+        .info {
+            width: 60%;
+        }
+        .detail {
+            width: 30%;
+            border: 2px dashed gray;
+            color: #444;
+            font-weight: 700;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    
+    <button id="load">서버에서 회원정보 불러오기</button>
+
+    <section class="info">
+        <ul class="content"></ul>
+
+        <div class="detail">
+            <div class="account">계정: <span class="acc"></span> </div>
+            <div class="name">이름: <span class="nm"></span> </div>
+            <div class="addr">주소: <span class="ad"></span> </div>
+        </div>
+    </section>
+
+    <script>
+
+        //서버가 응답한 정보를 화면에 렌더링
+        function makeResultDOM(response) {
+            /*
+                서버가 응답한 데이터는 마치 자바스크립트의
+                객체, 배열 형태로 보이지만 사실은 아닙니다.
+                이런 형태의 데이터를 JSON이라고 부릅니다.
+
+                JSON은 자바스크립트가 아닌 독립적 데이터 포맷이기
+                때문에 사용하려면 자바스크립트로 변환해서 써야 합니다.
+
+                # json -> js :  JSON.parse()
+                  js -> json :  JSON.stringify()
+            */
+
+            //JSON을 자바스크립트로 변환
+            const userList = JSON.parse(response);
+            console.log(userList);
+
+            const $ul = document.querySelector('.content');
+            for (let user of userList) {
+                const {id, account, userName, address} = user;
+                const $li = document.createElement('li');
+                $li.innerHTML = `# 아이디: ${account}, 이름: <a class="detail-btn" data-id=${id} href="#">${userName}</a>, 주소: ${address}`;
+
+                $ul.appendChild($li);
+            }
+
+            //제목 링크 클릭 이벤트
+            $ul.addEventListener('click', e => {
+                if (!e.target.matches('.detail-btn')) return;
+                e.preventDefault(); // a태그 본래 기능 중단
+                //console.log('제목링크 클릭됨!');
+
+                const xhr = new XMLHttpRequest();
+                const id = e.target.dataset.id;
+                xhr.open('GET', 'http://localhost:5000/user/' + id);
+                xhr.send();
+
+                xhr.onload = e => {
+                    if (xhr.status === 200) {                    
+                        //console.log(xhr.response);
+                        const userObj = JSON.parse(xhr.response);
+                        //console.log(userObj);
+                        const {account, userName, address} = userObj;
+
+                        document.querySelector('.acc').textContent
+                            = account;
+                        document.querySelector('.nm').textContent
+                            = userName;
+                        document.querySelector('.ad').textContent
+                            = address;
+
+                    } else {
+                        console.error('통신 실패!');
+                    }
+                };
+            });
+        }
+
+
+        const $loadBtn = document.getElementById('load');
+
+        $loadBtn.onclick = e => {
+
+            // # http 요청을 서버로 보내는 방법
+            //1. XMLHttpRequest 객체를 생성
+            const xhr = new XMLHttpRequest();
+
+            //2. http 요청 설정 (요청방식, 요청URL)
+            /*
+                - 요청 방식:
+                a. GET - 조회
+                b. POST - 등록
+                c. PUT - 수정
+                d. DELETE - 삭제
+            */
+            xhr.open('GET', 'http://localhost:5000/user');
+
+            //3. http 요청 전송
+            xhr.send();
+
+            //4. 응답정보 확인
+            xhr.onload = e => {
+                //응답코드
+                console.log(xhr.status); 
+                //응답 데이터 확인
+                //console.log(xhr.response);
+
+                if (xhr.status === 200) {                    
+                    makeResultDOM(xhr.response);
+                } else {
+                    console.error('통신 실패!');
+                }
+            };
+        };
+
+    </script>
+
+</body>
+</html>

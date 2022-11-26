@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <ul id="fruits">
+        <li>사과</li>
+    </ul>
+
+    <script>
+        function appendNewLi(text) {
+            //1. 새로운 요소노드를 생성
+            // <li></li>
+            const $newLi = document.createElement('li');
+
+            //2. 생성된 노드에 텍스트 추가
+            // <li>바나나</li>
+            $newLi.textContent = text;
+
+            //3. 새로운 노드를 ul의 자식으로 추가
+            const $ul = document.getElementById('fruits');
+            $ul.appendChild($newLi);
+        }
+
+        const fArr = ['바나나', '포도', '딸기', '복숭아', '참외', '수박'];
+
+        for (let f of fArr) {
+            appendNewLi(f);
+        }
+    </script>
+
+</body>
+
+</html>

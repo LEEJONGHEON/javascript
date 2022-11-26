@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script>
+
+        //GET요청을 처리하는 함수
+        function get(url) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', url);
+            xhr.send();
+
+            /*
+                # 우리는 get함수 바깥쪽으로 응답데이터를 반환하고 싶다.
+                - 하지만 응답처리 결과가 onload이벤트의 핸들러함수이므로
+                   get함수의 리턴으로 처리되지 않는다.
+            */
+            
+            xhr.onload = e => {
+                if (xhr.status === 200) {
+                    //console.log(xhr.response);
+                    console.log('통신 성공!');
+                    console.log(`객체정보(함수안): ${xhr.response}`);
+                    return xhr.response;
+                }
+            };
+
+        }
+
+        (function() {
+
+            const hong = get('http://localhost:5000/user/1');
+            console.log(`객체정보(함수밖): ${hong}`);
+            
+            get('http://localhost:5000/board?userId=' + hong.id);
+        })();
+
+    </script>
+</body>
+</html>

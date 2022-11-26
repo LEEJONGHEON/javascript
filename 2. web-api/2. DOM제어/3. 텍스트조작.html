@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #greet span {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="greet">
+        Hello <span>World!</span>
+    </div>
+
+    <ul id="fruits">
+        <li>사과</li>
+    </ul>
+
+    <script>
+
+        const $greet = document.getElementById('greet');
+        //trim() : 문자열의 앞뒤 공백 제거
+        console.log($greet.textContent.trim());
+
+        // $greet.textContent = '<span>안녕</span>하세요~~';
+        $greet.innerHTML = '<span>안녕</span>하세요~~';
+
+
+        const $fruits = document.getElementById('fruits');
+
+        //수정
+        $fruits.innerHTML = '<li>포도</li>';
+        //추가
+        $fruits.innerHTML += '<li>복숭아</li>';
+        //전체삭제
+        $fruits.innerHTML = '';
+
+    </script>
+
+</body>
+</html>

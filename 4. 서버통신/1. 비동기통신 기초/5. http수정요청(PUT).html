@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <button id="modi">수정!</button>
+
+    <script>
+
+        document.getElementById('modi').onclick = e => {
+            const xhr = new XMLHttpRequest();
+
+            /*
+                수정요청시 사용할 요청메서드 
+                1. PUT: 일부수정 불가능, 전체에 대한 수정
+                2. PATCH: 일부수정 가능.
+            */
+            xhr.open('PATCH', 'http://localhost:5000/user/2')
+
+            const modData = {
+                userName: '영희팍',
+                address: '로스앤젤레스'
+            };
+            xhr.setRequestHeader('content-type', 'application/json');
+            xhr.send(JSON.stringify(modData));
+
+            xhr.onload = e => {
+                if (xhr.status === 200) {
+                    alert('수정 성공!');
+                } else {
+                    alert('수정 실패!');
+                }
+            };
+        };
+
+    </script>
+
+</body>
+</html>

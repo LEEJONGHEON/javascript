@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #fruits {
+            display: flex;
+            list-style: none;
+            padding: 20px;
+            border: 2px solid red;
+        }
+        #fruits li {
+            width: 100px;
+            cursor: pointer;
+            background: orange;
+            margin-right: 10px;
+        }
+        .active {
+            color: red;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    
+    <ul id="fruits">
+        <li id="apple" class="active">Apple</li>
+        <li id="banana">Banana</li>
+        <li id="grape">Grape</li>
+    </ul>
+
+    <div>선택된 과일: <em class="msg">Apple</em></div>
+
+
+    <script>
+
+        const $fruits = document.querySelector('#fruits');
+
+        //이벤트 핸들러
+        const activate = e => {
+
+            //이벤트 발생 타겟을 제한
+            if (!e.target.matches('#fruits > li')) {
+                return;
+            }
+
+            //1. 클릭대상을 제외한 li태그에 있는 class="active" 제거
+            for (let $li of [...$fruits.children]) {
+                if ($li.classList.contains('active')) {
+                    $li.classList.remove('active');
+                    break;
+                }
+            }
+
+            //2. 클릭대상 li태그에 class=active 부여
+            e.target.classList.add('active');
+
+            //3. 클릭한 li태그에 있는 텍스트를 복사해서 em태그의 텍스트로 삽입
+            
+            const $em = document.querySelector('.msg');
+            $em.textContent = e.target.textContent;
+        };
+
+        //이벤트 핸들러 바인딩
+        // for (let $li of [...$fruits.children]) {
+        //     $li.onclick = activate;
+        // }
+
+        //ul에 이벤트부여 후 버블링 사용
+        $fruits.onclick = activate;
+
+    </script>
+
+</body>
+</html>

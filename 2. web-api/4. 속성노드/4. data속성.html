@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <ul class="users">
+        <li data-user-number="4321" data-role="common">김철수</li>
+        <li data-user-number="9999" data-role="admin">박영희</li>
+    </ul>
+
+    <script>
+
+        const $users = document.querySelector('.users');
+        
+        const [$u1, $u2] = [...$users.children];
+
+        console.log($u1.dataset.userNumber);
+        console.log($u2.dataset.role);
+
+        $u2.dataset.role = 'common';
+
+        $u1.dataset.userAddress = '대전시 서구';
+
+        delete $u1.dataset.userAddress;
+
+    </script>
+
+</body>
+</html>

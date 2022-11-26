@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <button id="b1">클릭1~</button>
+    <button id="b2">클릭2~</button>
+    <button id="b3">클릭3~</button>
+
+    <script>
+        
+        function sayHello() {
+            alert('안녕하세요!');
+        }
+
+        const [$b1, $b2, $b3] = [...document.querySelectorAll('button')];
+
+        $b1.onclick = sayHello;
+        $b2.onclick = function() {
+            $b2.style.width= '150px';
+        };
+        $b3.onmouseenter = () => {
+            $b3.style.background = 'red';
+        };
+        $b3.onmouseleave = () => {
+            $b3.style.background = 'yellow';
+        };
+        $b3.onmouseleave = sayHello;
+
+        //이벤트핸들러 제거
+        $b3.onmouseenter = null;
+
+    </script>
+
+</body>
+</html>

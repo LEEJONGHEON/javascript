@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <style>
+        label {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="register">
+        <label>
+            # 회원번호 : <input type="text" name="id">
+        </label>
+        <label>
+            # 계정명 : <input type="text" name="account">
+        </label>
+        <label>
+            # 비밀번호 : <input type="password" name="password">
+        </label>
+        <label>
+            # 이름 : <input type="text" name="userName">
+        </label>
+        <label>
+            # 주소 : <input type="text" name="address">
+        </label>
+        <label>
+            <button id="insert">회원가입</button>
+        </label>
+    </div>
+
+    <script>
+
+        const $insert = document.getElementById('insert');
+
+        $insert.onclick = e => {
+            e.preventDefault();
+
+            const xhr = new XMLHttpRequest();
+            
+            //서버 요청 정보 설정
+            xhr.open('POST', 'http://localhost:5000/user');
+
+            //POST요청은 서버로 전송할 데이터를 만들어야 한다.
+            //당연히 데이터의 형식은 JSON형태여야 한다.
+            const newData = {
+                id: document.querySelector('input[name=id]').value,
+                account: document.querySelector('input[name=account]').value,
+                userName: document.querySelector('input[name=userName]').value,
+                password: document.querySelector('input[name=password]').value,
+                address: document.querySelector('input[name=address]').value
+            };
+            // console.log(newData);
+
+            // JS -> JSON으로 변경 : JSON.stringify();
+            const sendData = JSON.stringify(newData);
+            // console.log(sendData);
+
+            // 전송할 데이터가 무슨 형태인지 요청 헤더에 지정
+            xhr.setRequestHeader('content-type', 'application/json');
+
+            //서버 요청 전송
+            xhr.send(sendData);
+
+            xhr.onload = e => {
+                console.log(xhr.status);
+            };
+        };
+
+    </script>
+
+</body>
+</html>

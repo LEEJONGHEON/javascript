@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        label {
+            display: block;
+        }
+
+        .del-btn {
+            width: 10px;
+            height: 10px;
+            background: red;
+            color: white;
+            border-radius: 5px;
+            margin-left: 5px;
+            text-decoration: none;
+            font-size: 0.7em;
+            padding: 6px;
+        }
+
+        .del-btn:hover {
+            background: orangered;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .score-list>li:first-child {
+            font-size: 1.2em;
+            color: blue;
+            font-weight: 700;
+            border-bottom: 1px solid skyblue;
+            margin-bottom: 10px;
+        }
+
+        label span[class$='span'] {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>시험 점수 등록</h1>
+
+    <label>
+        # 이름: <input type="text" name="name">
+    </label>
+    <label>
+        # 국어: <input type="text" name="kor"> <span class="kor-span"></span>
+    </label>
+    <label>
+        # 영어: <input type="text" name="eng"> <span class="eng-span"></span>
+    </label>
+    <label>
+        # 수학: <input type="text" name="math"> <span class="math-span"></span>
+    </label>
+    <div>
+        <button id="reg-btn">확인</button>
+    </div>
+
+    <hr>
+
+
+    <ul class="score-list">
+        <li class="stuNum">총 학생 수 : <span class="stu-count">1</span>명</li>
+    </ul>
+
+    <script>
+
+        const URL = 'http://192.168.1.91:8181/api/score';
+
+        //함수 선언부
+
+        //점수 삭제 요청
+        function deleteScoreData($target) {
+
+            fetch(URL + '/' + $target.dataset.stuNum, {
+                method: 'DELETE'
+            }).then(res => {
+                if (res.status === 200) {
+                    removeAll();
+                    getList();
+                } else {
+                    alert('삭제 실패!');
+                }
+            });
+        }
+
+        //점수리스트 렌더링
+        function makeScoreListDOM(scoreList) {
+
+            //총 학생수 숫자처리
+            document.querySelector('.stu-count').textContent = scoreList.length;
+
+
+            const $ul = document.querySelector('.score-list');
+            for (let s of scoreList) {
+                //객체 디스트럭쳐링
+                const {stuNum, name, kor, eng, math, total, average} = s;
+                //li태그 생성
+                let tag = `
+                    <li>
+                        # 학번: ${stuNum}, 이름: ${name}, 국어: ${kor}점, 영어: ${eng}점, 수학: ${math}점, 총점: ${total}점, 평균: ${average}점
+                        <a data-stu-num='${stuNum}' class='del-btn' href='#'>삭제</a>
+                    </li>    
+                `;
+                $ul.innerHTML += tag;
+
+            }//for문 내부
+
+            //삭제버튼 클릭이벤트
+            $ul.addEventListener('click', e => {
+                e.preventDefault();
+                if (!e.target.matches('ul li .del-btn')) return;
+                //console.log('삭제버튼 클릭!');
+
+                deleteScoreData(e.target);
+
+            });
+        }
+
+        //서버의 전체 성적정보 부르기
+        function getList() {           
+
+            fetch(URL)
+                .then(res => {
+                    if (res.status === 200) {
+                        return res.json();
+                    } else {
+                        alert('통신 실패!');
+                        return null;
+                    }
+                })
+                .then(userList => {
+                    makeScoreListDOM(userList);
+                });
+            
+        }
+
+        //등록시 숫자입력창 범위 검사
+        const $korInput = document.querySelector('input[name=kor]');
+        const $engInput = document.querySelector('input[name=eng]');
+        const $mathInput = document.querySelector('input[name=math]');
+
+        function numberValidation() {
+            
+            if (+$korInput.value < 0 || +$korInput.value > 100) return 1;            
+            if (+$engInput.value < 0 || +$engInput.value > 100) return 2;
+            if (+$mathInput.value < 0 || +$mathInput.value > 100) return 3;
+
+            return 4;
+        }
+        //검증 CSS처리
+        function validationCSS(flagNum) {
+            let className = '';
+            if (flagNum === 1) {
+                className = '.kor-span';
+            } else if (flagNum === 2) {
+                className = '.eng-span';
+            } else if (flagNum === 3) {
+                className = '.math-span';
+            }
+            if (flagNum !== 4) {
+                document.querySelector(className).textContent = '점수는 1~100점 사이로 입력하시오~';
+            }
+        }
+
+        //기존 ul의 li태그들 전체제거
+        function removeAll() {
+            const $ul = document.querySelector('.score-list');
+            for (let $li of [...$ul.children]) {
+                if ($li.classList.contains('stuNum')) continue;
+                $ul.removeChild($li);
+            }
+        }
+
+        //서버로 데이터 등록요청
+        function sendScoreData() {           
+
+            const reqObject = {
+                method : 'POST',
+                headers : {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: document.querySelector('input[name=name]').value,
+                    kor: +$korInput.value,
+                    eng: +$engInput.value,
+                    math: +$mathInput.value
+                })
+            };
+
+            fetch(URL, reqObject)
+                .then(res => {
+                    if (res.status === 200) {
+                        removeAll();
+                        getList();
+                    } else {
+                        alert('등록 실패!');
+                    }
+                });
+        }
+
+
+        //메인 실행부
+        (() => {
+
+            //서버에 있는 성적정보 리스트 불러오기
+            getList();
+
+            //등록버튼 이벤트처리
+            document.querySelector('#reg-btn').onclick = e => {
+
+                //입력란 검사(숫자 검증)
+                const flagNum = numberValidation();
+                validationCSS(flagNum);
+
+                //서버 데이터 전송
+                sendScoreData();
+            };
+        })();
+
+    </script>
+
+</body>
+</html>

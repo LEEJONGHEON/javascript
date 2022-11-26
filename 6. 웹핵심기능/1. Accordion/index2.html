@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .accordion {
+            background-color: #eee;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            transition: 0.4s;
+        }
+
+        .active,
+        .accordion:hover {
+            background-color: #ccc;
+        }
+
+        .panel {
+            padding: 0 18px;
+            background-color: #fff;
+            /* display: none; */
+            overflow: hidden;
+
+            /* 추가 */
+            max-height: 0;
+            transition: max-height 0.2s ease-out;
+        }
+    </style>
+
+</head>
+
+<body>
+    <button class="accordion">Section 1</button>
+    <div class="panel">
+        <p>Lorem ipsum...</p>
+    </div>
+
+    <button class="accordion">Section 2</button>
+    <div class="panel">
+        <p>Lorem ipsum...</p>
+    </div>
+
+    <button class="accordion">Section 3</button>
+    <div class="panel">
+        <p>Lorem ipsum...</p>
+    </div>
+
+
+    <script>
+        const $acc = document.querySelectorAll(".accordion");
+
+        for (let i = 0; i < $acc.length; i++) {
+            $acc[i].addEventListener('click', function (e) {
+                //클릭한 대상을 css로 강조하기 위함
+                $acc[i].classList.toggle('active');
+
+                // 기존에 block으로 열려있는 panel은 none으로 전환하여 닫아줌
+                const $panel = $acc[i].nextElementSibling;
+                if ($panel.style.maxHeight) {
+                    $panel.style.maxHeight = null;
+                } else {
+                    /*
+                        # 요소의 높이값
+                        - clientHeight : 요소의 내부 높이, 패딩은 포함되며 스크롤바, 보더, 마진은 제외
+                        - offsetHeight : 요소의 높이, 패딩, 스크롤바, 보더 포함, 마진은 제외
+                        - scrollHEight : 요소에 들어있는 컨텐츠의 전체 높이, 패딩 보더 포함, 마진 제외
+                    */
+                    $panel.style.maxHeight = $panel.scrollHeight + "px";
+                }
+            });
+        }
+    </script>
+
+</body>
+
+</html>

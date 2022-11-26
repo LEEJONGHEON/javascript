@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <a href="https://www.naver.com" class="link">네이버로 이동</a>
+
+    <form action="/login">
+        <input type="text" name="ttt">
+        <button id="check" type="submit">확인</button>
+    </form>
+
+    <script>
+        const $link = document.querySelector('.link');
+
+        $link.onclick = e => {
+            if (!confirm('정말로 이동할까요?')) {
+                e.preventDefault(); //기본기능 중단
+            } 
+        };
+
+        const $subBtn = document.getElementById('check');
+        $subBtn.onclick = e => {
+            e.preventDefault();
+
+            const $input = $subBtn.previousElementSibling;
+            if ($input.value === '') {
+                alert('필수입력사항입니다!');
+                return;
+            }
+
+            //서버로 데이터 전송
+            $subBtn.parentNode.submit();
+        };
+    </script>
+
+</body>
+</html>

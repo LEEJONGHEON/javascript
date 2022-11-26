@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+        .box {
+            width: 100px;
+            height: 100px;
+            background: lightgray;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .red {
+            color: red;
+            border: 2px dashed tomato;
+        }
+        .blue {
+            color: blue;
+            border: 2px dashed aqua;
+        }
+        .circle {
+            border-radius: 50%;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div class="box red">안녕</div>
+
+    <button id="change">변경!</button>
+
+    <script>
+
+        const $box = document.querySelector('.box');
+        // $box.setAttribute('class', 'box blue');
+        // $box.setAttribute('class', 'box blue circle');
+
+        //요소에 클래스를 추가
+        $box.classList.add('circle');
+        $box.classList.add('aaa', 'bbb', 'ccc');
+
+        //요소에 클래스를 제거
+        $box.classList.remove('circle');
+        $box.classList.remove('aaa', 'ccc');
+
+        //요소에 클래스를 교체
+        $box.classList.replace('red', 'blue');
+
+        //요소에 클래스 존재 유무 확인
+        console.log($box.classList.contains('red'));
+        console.log($box.classList.contains('box'));
+
+        const $btn = document.getElementById('change');
+
+        $btn.onclick = e => {
+
+            if (!$box.classList.contains('circle')) { //현재 네모였으면
+                $box.classList.add('circle');
+            } else { //현재 동그라미였으면
+                $box.classList.remove('circle');
+            }
+
+        };
+
+
+    </script>
+
+</body>
+</html>

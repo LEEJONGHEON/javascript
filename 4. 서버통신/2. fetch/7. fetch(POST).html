@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <style>
+        label {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="register">
+        <label>
+            # 회원번호 : <input type="text" name="id">
+        </label>
+        <label>
+            # 계정명 : <input type="text" name="account">
+        </label>
+        <label>
+            # 비밀번호 : <input type="password" name="password">
+        </label>
+        <label>
+            # 이름 : <input type="text" name="userName">
+        </label>
+        <label>
+            # 주소 : <input type="text" name="address">
+        </label>
+        <label>
+            <button id="insert">회원가입</button>
+        </label>
+    </div>
+
+    <script>
+
+        const $insert = document.getElementById('insert');
+
+        $insert.onclick = e => {
+            e.preventDefault();
+            
+
+            //GET요청의 서버 데이터 전달: URL에 쿼리파라미터(?a=1&b=2)를 전송
+            //POST요청의 서버 데이터 전달: 요청메시지(요청바디)에 숨겨서 전송
+
+            const reqObject = {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id: document.querySelector('input[name=id]').value,
+                    account: document.querySelector('input[name=account]').value,
+                    userName: document.querySelector('input[name=userName]').value,
+                    password: document.querySelector('input[name=password]').value,
+                    address: document.querySelector('input[name=address]').value
+                })
+            };
+
+            fetch('http://localhost:5000/user', reqObject)
+                .then(res => {
+                    if (res.status === 201 || res.status === 200) {
+                        alert('등록 성공!');
+                    } else {
+                        alert('등록 실패!');
+                    }
+                });
+        };
+
+    </script>
+
+</body>
+</html>

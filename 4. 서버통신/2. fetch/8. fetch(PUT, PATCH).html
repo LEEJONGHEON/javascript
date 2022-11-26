@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <button id="modi">수정!</button>
+
+    <script>
+
+        document.getElementById('modi').onclick = e => {            
+            
+            //수정 데이터
+            const modData = {
+                userName: '펫치수정킹',
+                address: '캘리포니아'
+            };
+
+            const reqObject = {
+                method: 'PATCH',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(modData)
+            };
+
+            fetch('http://localhost:5000/user/2', reqObject)
+                .then(res => {
+                    if (res.status === 200) {
+                        alert('수정 성공');
+                    } else {
+                        alert('수정 실패');
+                    }
+                });
+            
+        };
+
+    </script>
+
+</body>
+</html>

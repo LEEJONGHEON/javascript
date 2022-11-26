@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script>
+
+        //GET요청을 처리하는 함수
+        function get(url, cb) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', url);
+            xhr.send();
+
+            /*
+                # 해결책: 응답데이터를 후속처리 콜백함수의 매개값으로
+                넘겨서 처리한다.
+            */
+            
+            xhr.onload = e => {
+                if (xhr.status === 200) {
+                    //console.log(xhr.response);
+                    console.log('통신 성공!');
+                    console.log(`객체정보(함수안): ${xhr.response}`);
+                    cb(xhr.response);
+                }
+            };
+
+        }
+
+        (function() {
+
+
+            get('http://localhost:5000/user', function (res) {           
+                console.log(`객체정보(함수밖): ${res}`);
+                const userList = JSON.parse(res);
+
+                for (let u of userList) {
+                    console.log(u.userName);
+                }
+            });       
+            
+            
+            /*
+                # 상황
+                /user : 회원목록조회
+                /board : 게시물 목록조회
+                /friend : 친구 목록조회
+
+                # 가정:
+                - 게시판에서 3번 게시글을 조회한 후 해당 글의 
+                작성자의 아이디를 얻어내어 그 작성자의 모든 친구목록을
+                조회한 후 7번째친구에게 메세지를 전송해야 함.
+            */
+
+            console.log('==========================');
+            
+            // callback hell
+            
+            get('/board/3', bbs => {
+                // bbs : 3번게시물 정보
+                get('/user/' + bbs.userId, userInfo => {
+                    //userInfo : 3번게시물을 작성한 회원의 정보
+                    get('/friend/' + userInfo[6].userId, friendInfo => {
+                        //friendInfo : 3번게시물을 작성한 회원의 7번째 친구정보
+                        //이사람한테 메시지 보내는 코드
+
+                    });
+                });
+            });
+            
+        })();
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            background: orange;
+            margin: 20px;
+        }
+        .box.red {
+            background: red;
+        }
+        .box.green {
+            background: yellowgreen;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="box" onclick="callMessage();"></div>
+    <div class="box red" onclick="growUp();"></div>
+    <div class="box green" onclick="makeText()"></div>
+
+    <script>
+        //이벤트 핸들러: 이벤트가 발생했을 때 브라우저가 호출할 함수
+        function callMessage() {
+            alert('박스 클릭됨!');
+        }
+
+        const growUp = function() {
+            const $redBox = document.querySelector('.red');
+            $redBox.style.width = '200px';
+        };
+
+        const makeText = () => {
+            const $greenBox = document.querySelector('.green');
+            $greenBox.textContent = '안녕';
+        };
+    </script>
+
+</body>
+</html>

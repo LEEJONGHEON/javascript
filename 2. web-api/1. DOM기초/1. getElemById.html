@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #banana {
+            color: yellow;
+        }
+    </style>
+</head>
+<body>
+    
+    <ul>
+        <li id="apple">사과</li>
+        <li id="banana">바나나</li>
+        <li id="grape">포도</li>
+        <li id="pineapple">파인애플</li>
+    </ul>
+
+    <script>
+
+        // 아이디속성으로 요소 노드 가져오기
+        // console.log(document.body);
+
+        const $bnn = document.getElementById('banana');
+        console.log($bnn.textContent);
+
+        $bnn.textContent = '브네이너';
+
+        console.log($bnn.style);
+        $bnn.style.color = 'yellow';
+        $bnn.style.fontSize = '20px';
+        $bnn.style.fontWeight = 'bold';
+
+        //id가 grape인 요소노드를 취득하여
+        //배경색상을 violet으로 변경
+        const $grape = document.getElementById('grape');
+        $grape.style.backgroundColor = 'violet';
+        $grape.style.width = 'fit-content';
+        
+        
+    </script>
+
+</body>
+</html>

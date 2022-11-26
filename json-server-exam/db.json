@@ -1,0 +1,38 @@
+{
+  "user": [
+    {
+      "id": "1",
+      "account": "ddd1234",
+      "userName": "주차킹",
+      "password": "dsdsf",
+      "address": "캘리포니아"
+    },
+    {
+      "id": "3",
+      "account": "ggg4444",
+      "userName": "김영희",
+      "password": "dsdfafd",
+      "address": "부산시 수영구"
+    }
+  ],
+  "board": [
+    {
+      "id": 1,
+      "title": "신난다",
+      "writer": "홍길동",
+      "userId": 1
+    },
+    {
+      "id": 2,
+      "title": "재밌다",
+      "writer": "영희팍",
+      "userId": 2
+    },
+    {
+      "id": 3,
+      "title": "랄라라",
+      "writer": "홍길동",
+      "userId": 1
+    }
+  ]
+}

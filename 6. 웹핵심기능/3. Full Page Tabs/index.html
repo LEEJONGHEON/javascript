@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial;
+        }
+
+        .tablink {
+            background-color: #fff;
+            color: #000;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            font-size: 17px;
+            width: 25%;
+        }
+
+        .tablink:hover {
+            background-color: #777;
+            color: #fff;
+        }
+
+        .tabcontent {
+            color: #fff;
+            display: none;
+            padding: 100px 20px;
+            height: 100%;
+        }
+
+        #Home {
+            background-color: red;
+        }
+
+        #News {
+            background-color: green;
+        }
+
+        #Contact {
+            background-color: blue;
+        }
+
+        #About {
+            background-color: orange;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="btn-group">
+        <button class="tablink" data-bgc="red">Home</button>
+        <button class="tablink" data-bgc="green" id="defaultOpen">News</button>
+        <button class="tablink" data-bgc="blue">Contact</button>
+        <button class="tablink" data-bgc="orange">About</button>
+    </div>
+
+    <div id="Home" class="tabcontent">
+        <h3>Home</h3>
+        <p>Home is where the heart is..</p>
+    </div>
+
+    <div id="News" class="tabcontent">
+        <h3>News</h3>
+        <p>Some news this fine day!</p>
+    </div>
+
+    <div id="Contact" class="tabcontent">
+        <h3>Contact</h3>
+        <p>Get in touch, or swing by for a cup of coffee.</p>
+    </div>
+
+    <div id="About" class="tabcontent">
+        <h3>About</h3>
+        <p>Who we are and what we do.</p>
+    </div>
+
+    <script>
+        function openPage(e) {
+            // class="tabcontent" 를 모두 숨기기            
+            const $tabcontent = document.querySelectorAll('.tabcontent');
+            for (let i = 0; i < $tabcontent.length; i++) {
+                $tabcontent[i].style.display = "none";
+            }
+
+            // 모든 tablinks/buttons 배경색상 제거
+            const $tablinks = document.querySelectorAll('.tablink');
+            for (i = 0; i < $tablinks.length; i++) {
+                $tablinks[i].style.backgroundColor = "";
+            }
+
+            // 클릭한 버튼의 텍스트와 같은 아이디를 가진 div영역 활성화
+            const pageName = e.target.textContent;
+            document.getElementById(pageName).style.display = "block";
+
+            // 버튼배경색 처리
+            e.target.style.backgroundColor = e.target.dataset.bgc;
+        }
+
+        // 이벤트 핸들러 바인딩
+        const $btnGroup = document.querySelector('.btn-group');
+        $btnGroup.onclick = openPage;
+
+        // 초기 디폴트탭 클릭상태로 시작
+        document.getElementById("defaultOpen").click();
+    </script>
+</body>
+
+</html>

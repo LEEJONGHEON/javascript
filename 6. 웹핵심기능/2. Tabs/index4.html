@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+    <style>
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+        }
+
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        .tab button.active {
+            background-color: #ccc;
+        }
+
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+
+            /* 페이드인 효과 적용 */
+            animation: fadeEffect 1s;
+        }
+
+        @keyframes fadeEffect {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Tab links -->
+    <div class="tab">
+        <button class="tablinks">London</button>
+        <button class="tablinks">Paris</button>
+        <button class="tablinks">Tokyo</button>
+    </div>
+
+    <!-- Tab content -->
+    <div id="London" class="tabcontent">
+        <h3>London</h3>
+        <p>London is the capital city of England.</p>
+    </div>
+
+    <div id="Paris" class="tabcontent">
+        <h3>Paris</h3>
+        <p>Paris is the capital of France.</p>
+    </div>
+
+    <div id="Tokyo" class="tabcontent">
+        <h3>Tokyo</h3>
+        <p>Tokyo is the capital of Japan.</p>
+    </div>
+
+    <script>
+        function openCity(e) {
+
+            if (!e.target.matches('.tablinks')) return;
+
+            // 이벤트 시작시 tabcontent 태그들 숨김
+            const $tabcontent = document.querySelectorAll('.tabcontent');
+            for (let i = 0; i < $tabcontent.length; i++) {
+                $tabcontent[i].style.display = "none";
+            }
+
+            // 모든 버튼에서 active 클래스 제거
+            const $tablinks = document.querySelectorAll('.tablinks');
+            for (i = 0; i < $tablinks.length; i++) {
+                $tablinks[i].classList.remove('active');
+            }
+
+            // 버튼의 텍스트가 각도시 설명 tabcontent의 아이디이므로 버튼 텍스트를 얻어서
+            // 그 텍스트로 아이디 요소노드취득 후 display속성을 통해 화면에 보이게 처리
+            const cityName = e.target.textContent;
+            document.getElementById(cityName).style.display = 'block';
+            e.target.classList.add('active');
+        }
+
+        // 각 버튼에 이벤트 핸들러 바인딩
+        const $tab = document.querySelector('.tab');
+
+        // 이벤트타입 mouseover으로 hover 처리
+        $tab.addEventListener('click', openCity);
+        $tab.addEventListener('mouseover', openCity);
+
+        // 기본으로 London오픈하고 시작
+        document.querySelector('.tab button:first-child').click();
+
+    </script>
+
+</body>
+
+</html>

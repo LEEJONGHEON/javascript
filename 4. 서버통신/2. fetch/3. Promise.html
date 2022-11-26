@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        /*
+            # Promise: 비동기 통신을 할 때 상태에 따른
+              콜백함수들을 관리해주는 객체
+
+            1. 상태 (state)
+            - pending: 요청을 수행중
+            - fulfilled: 요청을 성공
+            - rejected: 요청을 실패
+
+            2. Promise객체는 2개의 콜백함수를 매개변수로 가집니다.
+            - a. resolve: 요청 성공시 처리하는 함수
+            - b. reject: 요청 실패시 처리하는 함수
+        */
+
+        function get(url) {
+            return new Promise((resolve, reject) => {
+                //요청 처리
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', url);
+                xhr.send();
+
+                xhr.onload = e => {
+                    if (xhr.status === 200) {
+                        //요청 성공시 처리할 콜백
+                        resolve(JSON.parse(xhr.response));
+                    } else {
+                        //요청 실패시 처리할 콜백
+                        reject('통신 실패!');
+                    }
+                };
+            });
+        }
+
+        (function() {
+
+            const result = get('http://localhost:5000/user/2');
+            console.log(result);
+
+            /*
+                -Promise 내부 데이터 소비
+                1. then(): Promise가 fulfilled(성공) 상태일 때 데이터후속처리 수행
+                2. catch(): Promise가 rejected(실패) 상태일 때 데이터후속처리 수행
+            */
+
+            result.then(userInfo => {
+                console.log(userInfo);
+            });
+
+
+            //2번 파일 콜백지옥 해결 예시
+            get('/board/3')
+                .then(bbsInfo => get('/user/' + bbsInfo.userId))
+                .then(userInfo => get('/friend/' + userInfo.friend[6].userId))
+                .then(friendInfo => {
+                    //친구에게 쪽지보내기
+                })
+                .catch(error => {
+                    //에러 처리
+                    //error: reject의 데이터가옴
+                });
+
+
+        })();
+
+    </script>
+
+</body>
+</html>

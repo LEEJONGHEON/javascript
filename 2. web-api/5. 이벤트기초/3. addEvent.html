@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <button id="btn">클릭하세요!</button>
+
+    <script>
+        //이벤트 핸들러 함수
+        function hello() {
+            alert('안녕~');
+        }
+
+        const $btn = document.getElementById('btn');
+
+        /*
+        $btn.onclick = hello;
+        $btn.onclick = function () {
+            $btn.style.background = 'aqua';
+        }
+        */
+
+        $btn.addEventListener('click', hello);
+        $btn.addEventListener('click', function() {
+            $btn.style.background = 'aqua';
+        });
+
+        //이벤트 핸들러 제거
+        $btn.removeEventListener('click', hello);
+    </script>
+
+</body>
+
+</html>

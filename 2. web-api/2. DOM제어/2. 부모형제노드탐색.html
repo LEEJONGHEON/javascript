@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class="wrap">
+        <ul id="fruits">
+            <li class="apple">사과</li>
+            <li class="banana">바나나</li>
+            <li class="grape">포도</li>
+        </ul>    
+    </div>
+
+    <table id="board">
+        <tr>
+            <td>A</td>
+            <td>B</td>
+        </tr>
+        <tr>
+            <td>C</td>
+            <td>D</td>
+        </tr>
+    </table>
+
+    <script>
+
+        //노드탐색의 기점이 되는 요소 취득        
+        const $fruits = document.querySelector('#fruits');
+
+        const $wrap = $fruits.parentElement;
+        console.log($wrap);
+
+        const $banana = document.querySelector('#fruits > li:nth-child(2)');
+
+        //부모노드 탐색
+        const $ul = $banana.parentElement;
+        console.log($ul);
+
+        console.log($banana.parentElement.parentElement);
+        console.log($banana.parentElement.parentElement.parentElement);
+        console.log($banana.parentElement.lastElementChild);
+
+        // 다음 형제노드 탐색
+        console.log($banana.nextElementSibling);
+
+        // 이전 형제노드 탐색
+        console.log($banana.previousElementSibling);
+       
+
+        //테이블 요소노드 취득
+        //테이블은 자동으로 table태그와 tr태그 중간에 tbody가 삽입되므로
+        //요소탐색시 주의
+        const $table = document.querySelector('#board');
+        const $target = $table.firstElementChild.lastElementChild.firstElementChild;
+
+        $target.style.color = 'red';
+
+
+    </script>
+
+</body>
+</html>

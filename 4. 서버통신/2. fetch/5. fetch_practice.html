@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    
+    <script>
+
+        //fetch함수를 사용해서 서버의 성적정보를 콘솔에 출력하시오
+        // url:  http://192.168.1.91:8181/api/score
+
+        fetch('http://192.168.1.91:8181/api/score')
+            .then(res => res.json())
+            .then(scoreList => {
+                console.log(scoreList);
+            });
+
+    </script>
+
+
+</body>
+</html>
