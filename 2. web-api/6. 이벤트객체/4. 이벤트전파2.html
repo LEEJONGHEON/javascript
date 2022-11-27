@@ -44,7 +44,7 @@
         document.querySelector('.root').onclick = e => alert('root');
         document.querySelector('.parent').onclick = e => alert('parent');
         document.querySelector('.child').onclick = e => {
-            e.stopPropagation();
+            e.stopPropagation(); // 버블링  막는 코드
             alert('child');
         };
         document.querySelector('.target').onclick = e => {

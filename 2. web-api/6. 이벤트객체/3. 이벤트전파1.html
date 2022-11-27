@@ -32,18 +32,19 @@
     <script>
 
         const $fruits = document.getElementById('fruits');
-
+        
+        // 버블링 : 하위 태그가 상위 태그의 이벤트를 발동시키는것 
         $fruits.addEventListener('click', e => {
             console.log('ul태그 클릭이벤트 발생!');
             console.log('실제로 이벤트가 발생한 곳:', e.target);
             console.log('이벤트를 걸어놓은 곳:', e.currentTarget);
         });
 
-        const $grape = $fruits.lastElementChild;
+        // const $grape = $fruits.lastElementChild;
 
-        $grape.addEventListener('click', e => {
-            console.log('grape에서 클릭이벤트 발생!');
-        });
+        // $grape.addEventListener('click', e => {
+        //     console.log('grape에서 클릭이벤트 발생!');
+        // });
 
     </script>
 

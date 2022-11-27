@@ -34,16 +34,17 @@
         const $fruits = document.querySelector('#fruits');
 
         const $wrap = $fruits.parentElement;
-        console.log($wrap);
+        console.log("wrap:",$wrap);
 
         const $banana = document.querySelector('#fruits > li:nth-child(2)');
 
         //부모노드 탐색
         const $ul = $banana.parentElement;
-        console.log($ul);
+        console.log("ul:",$ul);
 
-        console.log($banana.parentElement.parentElement);
-        console.log($banana.parentElement.parentElement.parentElement);
+        console.log("2 parentElement",$banana.parentElement.parentElement);
+        console.log("3 parentElement",$banana.parentElement.parentElement.parentElement);
+        
         console.log($banana.parentElement.lastElementChild);
 
         // 다음 형제노드 탐색

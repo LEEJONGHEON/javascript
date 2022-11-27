@@ -1,0 +1,25 @@
+<script>
+    fetch('http://localhost:8181/api/todos',)
+        .then(res => res.json())
+        .then(todos => {
+            console.log(todos)
+        })
+</script>
+
+<script>
+    const newTodos = {
+        title : '테스트 타이틀',
+    }
+
+    const requestInfo = {
+        method : 'POST',
+        headers : {'content-type': 'application/json'},
+        body : JSON.stringify(newTodos)
+    }
+
+    fetch('http://localhost:8181/api/todos',requestInfo)
+        .then(res => res.json())
+        .then(todos => {
+            console.log(todos)
+        })
+</script>

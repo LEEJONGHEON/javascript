@@ -1,38 +1,73 @@
 {
-  "user": [
-    {
-      "id": "1",
-      "account": "ddd1234",
-      "userName": "주차킹",
-      "password": "dsdsf",
-      "address": "캘리포니아"
-    },
-    {
-      "id": "3",
-      "account": "ggg4444",
-      "userName": "김영희",
-      "password": "dsdfafd",
-      "address": "부산시 수영구"
-    }
-  ],
-  "board": [
+  "pets": [
     {
       "id": 1,
-      "title": "신난다",
-      "writer": "홍길동",
-      "userId": 1
+      "kind": "강아지",
+      "name": "뽀삐",
+      "age": 3
     },
     {
       "id": 2,
-      "title": "재밌다",
-      "writer": "영희팍",
-      "userId": 2
+      "kind": "고양이",
+      "name": "고양",
+      "age": 5
     },
     {
       "id": 3,
-      "title": "랄라라",
-      "writer": "홍길동",
-      "userId": 1
+      "kind": "거북이",
+      "name": "거북",
+      "age": 7
+    },
+    {
+      "pets": [
+        {
+          "id": 4,
+          "kind": "비둘기",
+          "name": "구",
+          "age": 9
+        }
+      ],
+      "id": 4
+    },
+    [
+      {
+        "id": 4,
+        "kind": "비둘기",
+        "name": "구",
+        "age": 9
+      }
+    ],
+    {
+      "id": 11,
+      "kind": "치타",
+      "name": "치타",
+      "age": 3
+    },
+    {
+      "id": 123,
+      "kind": "테스트1",
+      "name": "테스트2",
+      "age": 22
+    }
+  ],
+  "user": [
+    {
+      "id": 1,
+      "account": "test1",
+      "userName": "테스트이름1",
+      "address": "테스트주소1"
+    },
+    {
+      "id": 2,
+      "account": "test2",
+      "userName": "테스트이름2",
+      "address": "테스트주소2"
+    },
+    {
+      "id": 3,
+      "account": "test3",
+      "userName": "테스트이름3",
+      "address": "테스트주소3"
     }
   ]
 }
